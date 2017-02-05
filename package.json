@@ -1,9 +1,13 @@
 {
   "name": "scroll-window-to-element",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple ES6 Class for scroll window to DOM element with smooth animation",
   "main": "gulpfile.js",
   "author": "Vadim Petrov – github.com/komock",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Komock/scroll-window-to-element.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "babel-preset-es2015": "^6.22.0",
