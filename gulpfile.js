@@ -43,7 +43,7 @@ gulp.task('pug', function() {
 
 
 gulp.task('bundle-js', function() {
-		return browserify(src + 'js/index.js')
+		return browserify(src + 'js/demo.js')
 		.transform( 'babelify', {presets: ['es2015', 'stage-1']} )
 		.bundle()
 		.pipe(source('bundle.min.js'))
