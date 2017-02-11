@@ -2,6 +2,8 @@
 
 Simple ES6 Class for scroll window to DOM element with smooth animation
 
+Example: [komock.github.io/scroll-window-to-element/](https://komock.github.io/scroll-window-to-element/)
+
 ## Install
 ```sh
 npm i --save-dev scroll-window-to-element
