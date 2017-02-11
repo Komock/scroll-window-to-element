@@ -1,14 +1,42 @@
+@mixin bevel($clr){
+	background-color: $clr;
+	.section__title {
+		color: lighten($clr, 5%);
+		text-shadow:
+			//--- Bevel
+			0 1px 0 darken($clr, 6%), 
+			0 2px 0 darken($clr, 3%), 
+			0 3px 0 darken($clr, 6%), 
+			0 4px 0 darken($clr, 8%), 
+			0 5px 0 darken($clr, 9%),
+			//--- Shadow
+			0 6px 2px darken($clr, 1%), 
+			0 0 5px darken($clr, 2%), 
+			0 1px 4px darken($clr, 5%), 
+			0 3px 5px darken($clr, 4%), 
+			0 5px 10px darken($clr, 5%), 
+			0 10px 10px darken($clr, 9%), 
+			0 20px 20px darken($clr, 12%);
+	}
+}
+
 //------ Layout ------//
 
 body, html {
 	font-size: 16px;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Inconsolata', monospace;
 	background: #eee;
 }
 
 body, html, .site-container, .content, .section {
 	min-height: 100%;
 	height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Merriweather', serif;
+	font-weight: 700;
+	margin: 0 0 1.5em;
 }
 
 a {
@@ -26,33 +54,57 @@ a {
 	top: 0;
 	left: 0;
 	right: 0;
-	overflow: hidden;
-	padding: 30px 0;
-	background: rgba(0,0,0, 0.8);
+	padding: 60px 0 0;
 	z-index: 9999;
 }
 
 // Logo
 .logo {
-	margin: 10px 0;
+	margin: 0;
 	float: left;
 	color: #fff;
+	font-family: 'Inconsolata', monospace;
+	font-weight: normal;
 	font-size: 16px;
+	line-height: 30px;
 }
 
 // Nav
 .nav {
 	float: right;
 	ul {
-		overflow: hidden;
 		margin: 0;
 		padding: 0;
 		display: block;
 		list-style: none;
 		li {
-			margin: 10px 0 10px 20px;
+			position: relative;
+			margin: 0 0 0 30px;
 			display: block;
 			float: left;
+			overflow: hidden;
+			&:before {
+				position: absolute;
+				content: '';
+				display: block;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				height: 5px;
+				background: #fff;
+				opacity: 0;
+				transform: translateY(10px);
+				transition: .3s;
+			}
+			&:hover:before {
+				opacity: 1;
+				transform: translateY(0);
+			}
+			a {
+				display: block;
+				line-height: 30px;
+				text-decoration: none;
+			}
 		}
 	}
 }
@@ -71,8 +123,15 @@ a {
 		width: 100%;
 		top: 50%;
 		transform: translateY(-50%);
+		font-size: 140px;
 		text-align: center;
+		color: #fff;
 	}
+	&:nth-child(1){ @include bevel(#EF5350) }
+	&:nth-child(2){ @include bevel(#AB47BC) }
+	&:nth-child(3){ @include bevel(#5C6BC0) }
+	&:nth-child(4){ @include bevel(#4CAF50) }
+	&:nth-child(5){ @include bevel(#C0CA33) }
 }
 
 

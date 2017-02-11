@@ -1,11 +1,11 @@
-import animate from './animate.js';
+let animate = require('./animate.js');
 
-export default class scrollToElement {
-	constructor( options ) {
-		let defaults = { 
-			anchors: 'a[href*="#"]', 
-			duration: 350, 
-			easing: 'easeInOut' 
+class scrollToElement {
+	constructor(options) {
+		let defaults = {
+			anchors: 'a[href*="#"]',
+			duration: 350,
+			easing: 'easeInOut'
 		};
 		options ? this.options = Object.assign(defaults, options) : this.options = defaults;
 	}
@@ -18,31 +18,29 @@ export default class scrollToElement {
 		});
 	}
 
-	timingFn(progress, startVal, displace) {
-		switch (this.easing) {
-			case 'quad':
-				return (Math.pow(progress, 2) * displace) + startVal;
-			case 'linear':
-				return (progress * displace) + startVal;
-			// Default animation 'easeInOut'
-			default:
-				function makeEaseInOut(timing) {
-					return ()=> {
-						if (progress < 0.5){
-							return timing(2 * progress) / 2;
-						} else {
-							return (2 - timing(2 * (1 - progress))) / 2;
-						}
-					}
-				}
-				let easeInOut = makeEaseInOut( (progress)=> Math.pow( progress, 2 ) );
-				return ( easeInOut() * displace ) + startVal;
+	makeEaseInOut(timing, progress) {
+		return () => {
+			if (progress < 0.5) {
+				return timing(2 * progress) / 2;
+			} else {
+				return (2 - timing(2 * (1 - progress))) / 2;
+			}
 		};
+	}
+
+	timingFn(progress, startVal, displace) {
+		if (this.easing === 'linear') {
+			return (progress * displace) + startVal;
+		} else {
+			// Default animation 'easeInOut'
+			let easeInOut = this.makeEaseInOut((progress)=> Math.pow(progress, 2), progress);
+			return (easeInOut() * displace) + startVal;
+		}
 	}
 
 	clickHandler(e) {
 		e.preventDefault();
-		
+
 		let el = e.target,
 			link = el.getAttribute('href'),
 			elToScroll = document.querySelector(link) || document.querySelector(`*[data-section="${link.substr(1)}"]`),
@@ -77,3 +75,5 @@ export default class scrollToElement {
 		this.setClickEvent();
 	}
 }
+
+module.exports = scrollToElement;

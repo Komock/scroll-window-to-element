@@ -13,7 +13,7 @@ var source = require('vinyl-source-stream'),
 	uglify = require('gulp-uglify');
 
 //----- Config -----//
-var build = './build/',
+var build = './',
 	src = './src/';
 
 // SASS

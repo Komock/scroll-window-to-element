@@ -1,5 +1,5 @@
 // Animation function with requestAnimationFrame()
-export default function animate( draw, duration ) {
+module.exports = function animate( draw, duration ) {
 	let start = performance.now();
 	requestAnimationFrame(function animate( time ) {
 		let timePassed = time - start;
@@ -7,4 +7,4 @@ export default function animate( draw, duration ) {
 		draw(timePassed);
 		if (timePassed < duration) requestAnimationFrame(animate);
 	});
-}
+};
