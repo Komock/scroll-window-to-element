@@ -14,7 +14,7 @@ npm i --save-dev scroll-window-to-element
 // Absolute path to module 'node_modules/scroll-window-to-element/src/js/scroll-to-element.js'
 import scrollToElement from 'scroll-window-to-element';
 let scroller = new scrollToElement({
-		anchors: '.nav a'
+		anchors: 'nav a'
 	});
 scroller.init();
 ```
@@ -25,6 +25,7 @@ scroller.init();
 | ------ | ---- | ------- | ----------- |
 | anchors | string (html) | 'a[href*="#"]' | Selector for anchor (links) |
 | duration | number | 350 | Animation duration |
+| offset | number | 0 | Scroll offset |
 | easing | string | 'easeInOut' | Animation easing. Available: linear, easeInOut |
 
 To link section you can use 'id' or 'data-section' attribute (without '#').

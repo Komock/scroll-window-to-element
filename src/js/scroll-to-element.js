@@ -5,6 +5,7 @@ class scrollToElement {
 		let defaults = {
 			anchors: 'a[href*="#"]',
 			duration: 350,
+			offset: 0,
 			easing: 'easeInOut'
 		};
 		options ? this.options = Object.assign(defaults, options) : this.options = defaults;
@@ -13,9 +14,9 @@ class scrollToElement {
 	setClickEvent() {
 		let that = this,
 			anchors = document.querySelectorAll(this.options.anchors);
-		anchors.forEach(function(item) {
-			item.addEventListener('click', e => that.clickHandler(e));
-		});
+		for( let anchor of anchors ){
+			anchor.addEventListener('click', e=> that.clickHandler(e));
+		}
 	}
 
 	makeEaseInOut(timing, progress) {
@@ -48,7 +49,7 @@ class scrollToElement {
 
 		// Animation
 		let startVal = window.pageYOffset,
-			endVal = offsetTop,
+			endVal = offsetTop + this.options.offset,
 			displace = endVal - startVal,
 			duration = this.options.duration;
 
