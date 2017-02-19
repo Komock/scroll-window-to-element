@@ -1,8 +1,8 @@
 {
   "name": "scroll-window-to-element",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple ES6 Class for scroll window to DOM element with smooth animation",
-  "main": "./src/js/scroll-to-element.js",
+  "main": "./lib/scroll-window-to-element.js",
   "author": "Vadim Petrov – github.com/komock",
   "repository": {
     "type": "git",

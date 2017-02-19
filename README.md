@@ -11,7 +11,7 @@ npm i --save-dev scroll-window-to-element
 ## Usage
 
 ```js
-// Absolute path to module 'node_modules/scroll-window-to-element/src/js/scroll-to-element.js'
+// Absolute path to module 'node_modules/scroll-window-to-element/lib/scroll-window-to-element.js'
 import scrollToElement from 'scroll-window-to-element';
 let scroller = new scrollToElement({
 		anchors: 'nav a'

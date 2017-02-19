@@ -1,7 +1,6 @@
 'use strict';
 var source = require('vinyl-source-stream'),
 	buffer = require('vinyl-buffer'),
-	path = require('path'),
 	gulp = require('gulp'),
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
@@ -9,8 +8,9 @@ var source = require('vinyl-source-stream'),
 	browserSync = require('browser-sync').create(),
 	browserify = require('browserify'),
 	babelify = require('babelify'),
-	pug = require('gulp-pug'),
-	uglify = require('gulp-uglify');
+	uglify = require('gulp-uglify'),
+	babel = require('gulp-babel'),
+	pug = require('gulp-pug');
 
 //----- Config -----//
 var build = './',
@@ -41,17 +41,27 @@ gulp.task('pug', function() {
 		.pipe(browserSync.stream());
 });
 
+// Lib folder with module
+gulp.task('bundle-js', () => {
+    return gulp.src([src + 'js/scroll-window-to-element.js', src + 'js/animate.js'])
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(gulp.dest('./lib'))
+        .pipe(browserSync.stream());
+});
 
-gulp.task('bundle-js', function() {
-		return browserify(src + 'js/demo.js')
-		.transform( 'babelify', {presets: ['es2015', 'stage-1']} )
+// Demo
+gulp.task('demo-js', function() {
+	return browserify(src + 'js/demo.js')
+		.transform( 'babelify', {presets: ['es2015']} )
 		.bundle()
-		.pipe(source('bundle.min.js'))
+		.pipe(source('bundle.js'))
 		.pipe(buffer())
-		// .pipe(uglify())
+		.pipe(uglify())
 		.pipe(gulp.dest( build + 'js/' ))
 		.pipe(browserSync.stream());
-});	
+});
 
 // Watch
 gulp.task('watch', function() {
@@ -63,8 +73,9 @@ gulp.task('watch', function() {
 	});
 	gulp.watch(src + 'scss/*.scss', gulp.series('sass'));
 	gulp.watch([src + 'pug/**/*.pug', src + 'pug/includes/*.pug'], gulp.series('pug'));
-	gulp.watch(src + 'js/**/*.js', gulp.series('bundle-js'));
+	gulp.watch(src + 'js/**/*.js', gulp.series('demo-js'));
 });
 
 // default
-gulp.task('default', gulp.series( gulp.parallel( 'pug', 'sass', 'bundle-js' ), 'watch' ) );
+gulp.task('default', gulp.series( gulp.parallel( 'pug', 'sass', 'demo-js', 'bundle-js' ), 'watch' ) );
+

@@ -1,4 +1,4 @@
-import scrollToElement from './scroll-to-element.js';
+import scrollToElement from './scroll-window-to-element.js';
 let scroll = new scrollToElement();
 scroll.init();
 
