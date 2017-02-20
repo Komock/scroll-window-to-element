@@ -42,7 +42,7 @@ class scrollToElement {
 	clickHandler(e) {
 		e.preventDefault();
 
-		let el = e.target,
+		let el = e.currentTarget,
 			link = el.getAttribute('href'),
 			elToScroll = document.querySelector(link) || document.querySelector(`*[data-section="${link.substr(1)}"]`),
 			offsetTop = this.elOffsetTop(elToScroll);

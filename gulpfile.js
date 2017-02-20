@@ -54,7 +54,7 @@ gulp.task('bundle-js', () => {
 // Demo
 gulp.task('demo-js', function() {
 	return browserify(src + 'js/demo.js')
-		.transform( 'babelify', {presets: ['es2015']} )
+		.transform( 'babelify', { presets: ['es2015'] } )
 		.bundle()
 		.pipe(source('bundle.js'))
 		.pipe(buffer())
