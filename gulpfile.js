@@ -11,7 +11,8 @@ const source = require('vinyl-source-stream'),
 	umd = require('gulp-umd'),
 	terser = require('gulp-terser'),
 	size = require('gulp-size'),
-	pug = require('gulp-pug');
+	pug = require('gulp-pug'),
+	babel = require('gulp-babel');
 
 //----- Config -----//
 var build = './',
@@ -46,7 +47,7 @@ gulp.task('pug', function () {
 gulp.task('bundle-js', () => {
 	return gulp.src([src + 'js/scroll-window-to-element.js', src + 'js/animate.js'])
 		.pipe(babel({
-			presets: ['es2015']
+			presets: ['@babel/env']
 		}))
 		.pipe(gulp.dest('./lib'))
 		.pipe(browserSync.stream());
@@ -55,7 +56,7 @@ gulp.task('bundle-js', () => {
 // Demo
 gulp.task('demo-js', function () {
 	return browserify(src + 'js/demo.js')
-		.transform('babelify', { presets: ['es2015'] })
+		.transform('babelify', { presets: ['@babel/env'] })
 		.bundle()
 		.pipe(source('bundle.js'))
 		.pipe(buffer())
@@ -80,13 +81,27 @@ gulp.task('watch', function () {
 gulp.task('js:umd', function () {
 	const nameFn = file => 'ScrollToElement';
 	return gulp.src('./src/js/scroll-window-to-element.js')
+		.pipe(babel({ presets: ['@babel/env'] }))
 		.pipe(umd({
 			exports: nameFn,
 			namespace: nameFn,
 		}))
-		.pipe(terser())
+		// .pipe(uglify())
+		// .pipe(terser())
 		.pipe(size())
 		.pipe(gulp.dest('build'));
+});
+
+gulp.task('js:umd:es6', function () {
+	const nameFn = file => 'ScrollToElement';
+	return gulp.src('./src/js/scroll-window-to-element.js')
+		.pipe(umd({
+			exports: nameFn,
+			namespace: nameFn,
+		}))
+		// .pipe(terser())
+		.pipe(size())
+		.pipe(gulp.dest('build-es6'));
 });
 
 // default
